@@ -1,0 +1,11 @@
+h1 {
+    font-family: 'Montserrat';
+    font-weight: bold;
+}
+
+.welcome {
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 8rem;
+}
+

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { HabitsContainerComponent } from './habits-container/habits-container.component';
 
@@ -8,8 +8,8 @@ import { HabitsContainerComponent } from './habits-container/habits-container.co
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterOutlet,
+    CommonModule,
+    RouterModule,
     NavigationBarComponent,
     HabitsContainerComponent
   ],

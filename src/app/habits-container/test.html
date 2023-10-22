@@ -1,0 +1,28 @@
+<section>
+    <div *ngFor="let habit of habits" class="card" style="width: 18rem;">
+        <div class="card-body">
+            <div class="card-title-container">
+                <h5 class="card-title">{{ habit.name }}</h5>
+            </div>
+            <p class="card-text">{{ habit.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Category: {{ habit.category }}</li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">Edit</a>
+            <a href="#" class="card-link">Remove</a>
+        </div>
+    </div>
+</section>
+
+.card {
+    margin-left: 3rem;
+    margin-top: 2rem;
+    border-radius: 5%;
+    border-color: gray;
+}
+
+.card-title-container {
+    
+}

@@ -1,1 +1,22 @@
-<p>habits-container works!</p>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="friend-list">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div *ngFor="let habit of habits" class="friend-card">
+                    <img src="https://www.bootdey.com/image/400x100/6495ED" alt="profile-cover"
+                        class="img-responsive cover">
+                    <div class="card-info">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user"
+                            class="profile-photo-lg">
+                        <div class="friend-info">
+                            <p class="pull-right text-green">My Friend</p>
+                            <h5><a href="timeline.html" class="profile-link">Sophia Lee</a></h5>
+                            <p>Student at Harvard</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

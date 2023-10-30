@@ -1,19 +1,25 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
-    <div class="friend-list">
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div *ngFor="let habit of habits" class="friend-card">
-                    <img src="https://www.bootdey.com/image/400x100/6495ED" alt="profile-cover"
-                        class="img-responsive cover">
-                    <div class="card-info">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user"
-                            class="profile-photo-lg">
-                        <div class="friend-info">
-                            <p class="pull-right text-green">My Friend</p>
-                            <h5><a href="timeline.html" class="profile-link">Sophia Lee</a></h5>
-                            <p>Student at Harvard</p>
-                        </div>
+<div class="habits-container">
+    <div class="row">
+        <div class="col-md-3" *ngFor="let habit of habits">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ habit.name }}</h5>
+                    <h6 class="card-subtitle">{{ habit.category }}</h6>
+                    <p class="card-text">{{ habit.description }}</p>
+                    <meter style="width: 100%;" [min]="0" [max]="habit.target" [value]="habit.targetProgress"></meter>
+                    <hr>
+                    <div class="card-actions">
+                        <button *ngIf="isHabitTargetInitialized(habit.target)" class="increment-button" type="button"
+                            (click)="onIncrementClick(habit.id)" [disabled]="habit.targetProgress === habit.target">
+                            <mat-icon fontIcon="add_circle_outline"></mat-icon>
+                        </button>
+                        <button *ngIf="isHabitTargetInitialized(habit.target)" class="decrement-button" type="button"
+                            (click)="onDecrementClick(habit.id)" [disabled]="habit.targetProgress === 0">
+                            <mat-icon fontIcon="remove_circle_outline"></mat-icon>
+                        </button>
+                        <button *ngIf="!isHabitTargetInitialized(habit.target)" class="initialize-button" type="button">
+                            <mat-icon fontIcon="play_circle_filled"></mat-icon>
+                        </button>
                     </div>
                 </div>
             </div>

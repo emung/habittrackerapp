@@ -12,10 +12,18 @@ export class HabitService {
   apiServerUrl = "http://localhost:8080";
 
   constructor(private http: HttpClient) {
-    
+
   }
 
   public getHabits(): Observable<HabitDto[]> {
     return this.http.get<HabitDto[]>(`${this.apiServerUrl}/habits/all`);
-}
+  }
+
+  public incrementHabitProgress(habitId: number): Observable<HabitDto> {
+    return this.http.put<HabitDto>(`${this.apiServerUrl}/habits/${habitId}/target/increment`, { "incrementBy": 1 });
+  }
+
+  public decrementHabitProgress(habitId: number): Observable<HabitDto> {
+    return this.http.put<HabitDto>(`${this.apiServerUrl}/habits/${habitId}/target/decrement`, { "decrementBy": 1 });
+  }
 }

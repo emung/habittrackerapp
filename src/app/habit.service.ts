@@ -19,6 +19,10 @@ export class HabitService {
     return this.http.get<HabitDto[]>(`${this.apiServerUrl}/habits/all`);
   }
 
+  public setTargetForHabit(habitId: number, target: number, targetPeriod: string): Observable<HabitDto> {
+    return this.http.put<HabitDto>(`${this.apiServerUrl}/habits/${habitId}/target`, { target, targetPeriod });
+  }
+
   public incrementHabitProgress(habitId: number): Observable<HabitDto> {
     return this.http.put<HabitDto>(`${this.apiServerUrl}/habits/${habitId}/target/increment`, { "incrementBy": 1 });
   }

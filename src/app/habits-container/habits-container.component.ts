@@ -4,13 +4,16 @@ import { HabitDto } from '../habit-dto';
 import { HabitService } from '../habit.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-habits-container',
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './habits-container.component.html',
   styleUrls: ['./habits-container.component.css']
@@ -31,6 +34,23 @@ export class HabitsContainerComponent {
         alert(error.message);
       }
     );
+  }
+
+  onSetTargetClick(habitId: number) {
+    this.habitService.setTargetForHabit(habitId, 10, "DAILY").subscribe(
+      (updatedHabit: HabitDto) => {
+        // Find the habit in the habits array and update its targetProgress
+        const habitIndex = this.habits.findIndex(habit => habit.id === habitId);
+        if (habitIndex !== -1) {
+          this.habits[habitIndex].target = updatedHabit.target;
+          this.habits[habitIndex].targetProgress = 0;
+          this.habits[habitIndex].targetPeriod = updatedHabit.targetPeriod;
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 
   onIncrementClick(habitId: number) {

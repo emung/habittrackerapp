@@ -1,28 +1,41 @@
-<div class="habits-container">
+<div class="actions-container">
+    <button mat-flat-button class="create-button" type="button" color="primary"
+        (click)="openDialog()">Create
+    </button>
+</div>
+<mat-divider></mat-divider>
+<div class="habits-container container">
     <div class="row">
-        <div class="col-md-3" *ngFor="let habit of habits">
+        <div class="col-sm-12 col-md-6" *ngFor="let habit of habits">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ habit.name }}</h5>
                     <h6 class="card-subtitle">{{ habit.category }}</h6>
                     <p class="card-text">{{ habit.description }}</p>
-                    <meter style="width: 100%;" [min]="0" [max]="habit.target" [value]="habit.targetProgress"></meter>
-                    <hr>
+                    <!-- <meter style="width: 100%;" [min]="0" [max]="habit.target" [value]="habit.targetProgress"></meter> -->
+                    <mat-progress-bar class="target-progressbar" mode="determinate"
+                        [value]="getProgress(habit.targetProgress, habit.target)"></mat-progress-bar>
+                    <mat-divider></mat-divider>
                     <div class="card-actions">
-                        <button mat-raised-button *ngIf="isHabitTargetInitialized(habit.target)" class="increment-button" type="button"
-                            (click)="onIncrementClick(habit.id)" [disabled]="habit.targetProgress === habit.target">+
-                            <!-- <mat-icon fontIcon="add_circle_outline"></mat-icon> -->
+                        <button mat-icon-button *ngIf="isHabitTargetInitialized(habit.target)" class="increment-button"
+                            type="button" (click)="onIncrementClick(habit.id)"
+                            [disabled]="habit.targetProgress === habit.target">
+                            <mat-icon>add</mat-icon>
                         </button>
-                        <button mat-raised-button *ngIf="isHabitTargetInitialized(habit.target)" class="decrement-button" type="button"
-                            (click)="onDecrementClick(habit.id)" [disabled]="habit.targetProgress === 0">-
-                            <!-- <mat-icon fontIcon="remove_circle_outline"></mat-icon> -->
+                        <button mat-icon-button *ngIf="isHabitTargetInitialized(habit.target)" class="decrement-button"
+                            type="button" (click)="onDecrementClick(habit.id)" [disabled]="habit.targetProgress === 0">
+                            <mat-icon>remove</mat-icon>
                         </button>
-                        <button mat-raised-button *ngIf="!isHabitTargetInitialized(habit.target)" class="initialize-button" type="button"
-                            (click)="onSetTargetClick(habit.id)">Set target
-                            <!-- <mat-icon fontIcon="play_circle_filled"></mat-icon> -->
+                        <button mat-icon-button *ngIf="!isHabitTargetInitialized(habit.target)"
+                            class="initialize-button" type="button" (click)="onSetTargetClick(habit.id)">
+                            <mat-icon fontIcon="play_circle_filled"></mat-icon>
                         </button>
-                        <button mat-raised-button color="accent" class="edit-button">Edit
-                            <!-- <mat-icon>edit</mat-icon> -->
+                        <button mat-icon-button class="edit-button" type="button">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" class="delete-button" type="button"
+                            (click)="onDeleteHabitClick(habit.id)">
+                            <mat-icon>delete</mat-icon>
                         </button>
                     </div>
                 </div>

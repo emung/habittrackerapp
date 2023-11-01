@@ -5,6 +5,10 @@ import { HabitService } from '../habit.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CreateHabitDialogComponent } from '../create-habit-dialog/create-habit-dialog.component';
 
 
 @Component({
@@ -13,7 +17,10 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressBarModule,
+    MatDividerModule,
+    MatDialogModule
   ],
   templateUrl: './habits-container.component.html',
   styleUrls: ['./habits-container.component.css']
@@ -21,8 +28,12 @@ import { MatButtonModule } from '@angular/material/button';
 export class HabitsContainerComponent {
   habits: HabitDto[] = [];
 
-  constructor(private habitService: HabitService) {
+  constructor(private habitService: HabitService, public dialog: MatDialog) {
     this.loadHabits();
+  }
+
+  openDialog() {
+    this.dialog.open(CreateHabitDialogComponent);
   }
 
   private loadHabits(): void {
@@ -32,6 +43,21 @@ export class HabitsContainerComponent {
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
+      }
+    );
+  }
+
+  onDeleteHabitClick(habitId: number) {
+    this.habitService.deleteHabit(habitId).subscribe(() => {
+      const habitIndex = this.habits.findIndex(habit => habit.id === habitId);
+      if (habitIndex > -1) {
+        this.habits.splice(habitIndex, 1);
+      }
+    },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        console.log(error);
+
       }
     );
   }
@@ -85,6 +111,17 @@ export class HabitsContainerComponent {
 
   isHabitTargetInitialized(target: number | undefined): boolean {
     return target !== undefined && target > 0;
+  }
+
+  getProgress(targetProgress: number | undefined, target: number | undefined): number | undefined {
+    if (target === undefined || targetProgress === undefined) {
+      return;
+    }
+    return targetProgress * 100 / target;
+  }
+
+  transformTargetPeriod(period: string): string {
+    return period.toUpperCase();
   }
 
 }

@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Create a new habit</h2>
+<div mat-dialog-content class="content-container">
+    <form (ngSubmit)="createHabit()" #createHabitForm="ngForm">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required type="text" [(ngModel)]="habit.name" name="name"><br>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput required type="text" [(ngModel)]="habit.description" name="description"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Category</mat-label>
+            <input matInput required type="text" [(ngModel)]="habit.category" name="category">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Target</mat-label>
+            <input matInput required min="1" value="1" type="number" [(ngModel)]="habit.target" name="target">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Target period</mat-label>
+            <mat-select required [(ngModel)]="habit.targetPeriod" name="targetPeriod">
+                <mat-option *ngFor="let period of targetPeriods" [value]="period">{{ period }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="button-container">
+            <button class="create-button" mat-flat-button color="primary" type="submit"
+                [disabled]="!createHabitForm.form.valid">Create</button>
+            <button class="close-button" mat-flat-button color="accent" mat-dialog-close type="button">Close</button>
+        </div>
+    </form>
+</div>

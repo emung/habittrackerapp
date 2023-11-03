@@ -1,0 +1,25 @@
+.content-container button {
+    margin: 20px;
+    margin-right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.content-container mat-form-field {
+    min-width: 500px;
+    display: block;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+}

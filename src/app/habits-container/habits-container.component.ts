@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HabitDto } from '../habit-dto';
 import { HabitService } from '../habit.service';
@@ -9,6 +9,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateHabitDialogComponent } from '../create-habit-dialog/create-habit-dialog.component';
+import { Habit } from '../create-habit-dto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -25,15 +27,45 @@ import { CreateHabitDialogComponent } from '../create-habit-dialog/create-habit-
   templateUrl: './habits-container.component.html',
   styleUrls: ['./habits-container.component.css']
 })
-export class HabitsContainerComponent {
+export class HabitsContainerComponent implements OnInit {
   habits: HabitDto[] = [];
+  createHabit: Habit = {
+    name: '',
+    description: '',
+    category: '',
+    target: 1,
+    targetPeriod: '',
+    targetProgress: 0
+  };
 
-  constructor(private habitService: HabitService, public dialog: MatDialog) {
+  ngOnInit(): void {
     this.loadHabits();
   }
 
+  constructor(
+    private habitService: HabitService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar) {
+  }
+
   openDialog() {
-    this.dialog.open(CreateHabitDialogComponent);
+    const dialogRef = this.dialog.open(CreateHabitDialogComponent);
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (!result) {
+          return;
+        }
+        result.targetPeriod = this.transformTargetPeriod(result.targetPeriod);
+        this.habitService.createHabit(result).subscribe(newHabit => {
+          this.habits.push(newHabit);
+          this.snackBar.open(`Habit ${newHabit.name} was created.`, "Close", { duration: 3000 });
+        });
+      },
+      (error: HttpErrorResponse) => {
+        this.snackBar.open(error.message, "Close", { duration: 5000 });
+      }
+    );
   }
 
   private loadHabits(): void {
@@ -42,7 +74,7 @@ export class HabitsContainerComponent {
         this.habits = habitsResponse;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.snackBar.open(error.message, "Close", { duration: 5000 });
       }
     );
   }
@@ -120,8 +152,8 @@ export class HabitsContainerComponent {
     return targetProgress * 100 / target;
   }
 
-  transformTargetPeriod(period: string): string {
-    return period.toUpperCase();
+  transformTargetPeriod(period: string | undefined): string {
+    return !period ? "" : period.toUpperCase();
   }
 
 }

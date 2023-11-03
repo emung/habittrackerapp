@@ -1,16 +1,13 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HabitDto } from '../habit-dto';
-import { HabitService } from '../habit.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateHabitDialogComponent } from '../create-habit-dialog/create-habit-dialog.component';
 import { Habit } from '../create-habit-dto';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { HabitDto } from '../habit-dto';
+import { HabitService } from '../habit.service';
+import { SharedModule } from '../shared/shared.module';
 
 
 @Component({
@@ -18,11 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatDividerModule,
-    MatDialogModule
+    SharedModule
   ],
   templateUrl: './habits-container.component.html',
   styleUrls: ['./habits-container.component.css']

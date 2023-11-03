@@ -6,6 +6,17 @@ h1 {
 .welcome {
     text-align: center;
     vertical-align: middle;
-    margin-top: 6rem;
+    margin-top: 50px;
     font-size: 5vh;
+}
+
+.title {
+    margin-top: 60px;
+    /* text-align: center; */
+    /* vertical-align: middle; */
+}
+
+.statistics-container {
+    margin-top: 10px;
+    margin-left: 100px;
 }

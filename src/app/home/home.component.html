@@ -1,3 +1,11 @@
 <div>
     <h1 class="welcome">Habit Tracker</h1>
+    <mat-divider></mat-divider>
+</div>
+<div class="statistics-container">
+    <h2 class="title">Statistics</h2>
+    <p>Habit count: <strong>{{ getHabitCount() }}</strong></p>
+    <p>Finished: <strong>{{ getFinishedHabitsCount() }}</strong></p>
+    <p>In progress: <strong>{{ getInProgressHabitsCount() }}</strong></p>
+    <p>Categories count: <strong>{{ getHabitCategoriesCount() }}</strong></p>
 </div>

@@ -42,23 +42,21 @@ export class HomeComponent implements OnInit {
   }
 
   getFinishedHabitsCount(): number {
-    return this.habits.filter(habit => {
-      if (habit.target && habit.targetProgress && habit.target > 0) {
-        return habit.targetProgress === habit.target;
-      };
-      return false;
-    }).length;
+    return this.habits.filter(habit =>
+      habit.target &&
+      habit.targetProgress &&
+      habit.target > 0 &&
+      habit.targetProgress === habit.target
+    ).length
   }
 
   getInProgressHabitsCount(): number {
-    return this.habits.filter(habit => {
-      console.log(habit);
-      if (habit.target && habit.targetProgress !== undefined && habit.target > 0) {
-        // console.log(habit);
-        return habit.targetProgress < habit.target;
-      };
-      return false;
-    }).length;
+    return this.habits.filter(habit =>
+      habit.target &&
+      habit.targetProgress !== undefined &&
+      habit.target > 0 &&
+      habit.targetProgress < habit.target
+    ).length;
   }
 
   getHabitCategoriesCount(): number {

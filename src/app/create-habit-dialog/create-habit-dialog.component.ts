@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Habit } from '../create-habit-dto';
+import { CreateHabitDto } from '../create-habit-dto';
 import { SharedModule } from '../shared/shared.module';
-
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -22,7 +21,7 @@ export class CreateHabitDialogComponent {
     "daily", "bidaily", "weekly", "biweekly", "monthly", "bimonthly"
   ];
 
-  habit: Habit = {
+  habit: CreateHabitDto = {
     name: "",
     description: "",
     category: "",
@@ -32,26 +31,27 @@ export class CreateHabitDialogComponent {
   };
 
   constructor(
-    private dialogRef: MatDialogRef<CreateHabitDialogComponent>) { }
+    private dialogRef: MatDialogRef<CreateHabitDialogComponent>,
+    private snackBar: MatSnackBar) { }
 
   getTargetPeriods(): string[] {
     return this.targetPeriods;
   }
 
   createHabit(): void {
-    if (this.isHabitValid(this.habit))
+    if (this.isHabitValid()) {
       this.dialogRef.close(this.habit);
+    } else {
+      this.snackBar.open(`Habit can not be created. Check if any of the habit properties are empty.`, "Close", {
+        duration: 5000,
+      });
+    }
   }
 
-  isHabitValid(verifyHabit: Habit): boolean {
-    let isValid = true;
-    if (verifyHabit.name.trim().length === 0 ||
-      verifyHabit.description.trim().length === 0 ||
-      verifyHabit.category.trim().length === 0 ||
-      verifyHabit.target === 0) {
-      isValid = false;
-    }
-
-    return isValid;
+  isHabitValid(): boolean {
+    return this.habit.name.trim() !== "" &&
+      this.habit.description.trim() !== "" &&
+      this.habit.category.trim() !== "" &&
+      this.habit.target > 0;
   }
 }

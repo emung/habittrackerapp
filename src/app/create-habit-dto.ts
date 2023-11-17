@@ -1,4 +1,4 @@
-export interface Habit {
+export interface CreateHabitDto {
     name: string,
     description: string,
     category: string,

@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Modify a habit</h2>
+<div mat-dialog-content class="content-container">
+    <form (ngSubmit)="updateHabit()" #updateHabitForm="ngForm">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput required type="text" [(ngModel)]="updateHabitDto.name" name="name"><br>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput required type="text" [(ngModel)]="updateHabitDto.description" name="description"></textarea>
+        </mat-form-field>
+
+        <div class="button-container">
+            <button class="update-button" mat-flat-button color="primary" type="submit"
+            [disabled]="!updateHabitForm.form.valid">Update</button>
+            <button class="close-button" mat-flat-button color="accent" mat-dialog-close type="button">Close</button>
+        </div>
+    </form>
+</div>

@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateHabitDialogComponent } from '../create-habit-dialog/create-habit-dialog.component';
-import { Habit } from '../create-habit-dto';
+import { EditHabitDialogComponent } from '../edit-habit-dialog/edit-habit-dialog.component';
+import { CreateHabitDto } from '../create-habit-dto';
 import { HabitDto } from '../habit-dto';
 import { HabitService } from '../habit.service';
 import { SharedModule } from '../shared/shared.module';
@@ -22,7 +23,7 @@ import { SharedModule } from '../shared/shared.module';
 })
 export class HabitsContainerComponent implements OnInit {
   habits: HabitDto[] = [];
-  createHabit: Habit = {
+  createHabit: CreateHabitDto = {
     name: '',
     description: '',
     category: '',
@@ -41,7 +42,7 @@ export class HabitsContainerComponent implements OnInit {
     private snackBar: MatSnackBar) {
   }
 
-  openDialog() {
+  openCreateHabitDialog() {
     const dialogRef = this.dialog.open(CreateHabitDialogComponent);
 
     dialogRef.afterClosed().subscribe(
@@ -54,6 +55,28 @@ export class HabitsContainerComponent implements OnInit {
           this.habits.push(newHabit);
           this.snackBar.open(`Habit ${newHabit.name} was created.`, "Close", { duration: 3000 });
         });
+      },
+      (error: HttpErrorResponse) => {
+        this.snackBar.open(error.message, "Close", { duration: 5000 });
+      }
+    );
+  }
+
+  openEditHabitDialog(habit: HabitDto) {
+    const dialogRef = this.dialog.open(EditHabitDialogComponent, {
+      data: habit
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (!result) {
+          return;
+        }
+        this.habitService.updateHabit(habit.id, result).subscribe(updatedHabit => {
+          const index = this.habits.findIndex(h => h.id === habit.id);
+          this.habits[index] = updatedHabit;
+          this.snackBar.open(`Habit ${updatedHabit.name} was created.`, "Close", { duration: 3000 });
+        })
       },
       (error: HttpErrorResponse) => {
         this.snackBar.open(error.message, "Close", { duration: 5000 });

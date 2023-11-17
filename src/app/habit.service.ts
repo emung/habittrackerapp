@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HabitDto } from './habit-dto';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { Habit } from './create-habit-dto';
+import { CreateHabitDto } from './create-habit-dto';
+import { UpdateHabitDto } from './update-habit-dto';
 
 
 
@@ -20,12 +21,16 @@ export class HabitService {
     return this.http.get<HabitDto[]>(`${this.apiServerUrl}/habits/all`);
   }
 
-  public createHabit(habit: Habit): Observable<HabitDto> {
+  public createHabit(habit: CreateHabitDto): Observable<HabitDto> {
     return this.http.post<HabitDto>(`${this.apiServerUrl}/habits`, habit);
   }
 
+  public updateHabit(habitId: number, habit: UpdateHabitDto): Observable<HabitDto> {
+    return this.http.put<HabitDto>(`${this.apiServerUrl}/habits/${habitId}`, habit);
+  }
+
   public deleteHabit(habitId: number): Observable<any> {
-    return this.http.delete(`${this.apiServerUrl}/habits/${habitId}`, {responseType: 'text'})
+    return this.http.delete(`${this.apiServerUrl}/habits/${habitId}`, { responseType: 'text' })
   }
 
   public setTargetForHabit(habitId: number, target: number, targetPeriod: string): Observable<HabitDto> {

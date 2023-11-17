@@ -58,6 +58,7 @@ mat-icon {
 .card-text {
     font-size: 0.875rem;
     color: #333;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 

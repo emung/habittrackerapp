@@ -11,8 +11,10 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ habit.name }}</h5>
                     <h6 class="card-subtitle">{{ habit.category }}</h6>
+                    <mat-divider></mat-divider>
                     <p class="card-text">{{ habit.description }}</p>
-                    <!-- <meter style="width: 100%;" [min]="0" [max]="habit.target" [value]="habit.targetProgress"></meter> -->
+                    <p class="card-text">Current progress: {{ habit.targetProgress }} / {{ habit.target }}</p>
+                    <p class="card-text">Target period: {{ habit.targetPeriod }}</p>
                     <mat-progress-bar class="target-progressbar" mode="determinate"
                         [value]="getProgress(habit.targetProgress, habit.target)"></mat-progress-bar>
                     <mat-divider></mat-divider>

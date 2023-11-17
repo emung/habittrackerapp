@@ -22,7 +22,9 @@ import { SharedModule } from '../shared/shared.module';
   styleUrls: ['./habits-container.component.css']
 })
 export class HabitsContainerComponent implements OnInit {
+  private originalHabits: HabitDto[] = [];
   habits: HabitDto[] = [];
+
   createHabit: CreateHabitDto = {
     name: '',
     description: '',
@@ -31,6 +33,8 @@ export class HabitsContainerComponent implements OnInit {
     targetPeriod: '',
     targetProgress: 0
   };
+
+  searchHabitName: string = "";
 
   ngOnInit(): void {
     this.loadHabits();
@@ -52,7 +56,7 @@ export class HabitsContainerComponent implements OnInit {
         }
         result.targetPeriod = this.transformTargetPeriod(result.targetPeriod);
         this.habitService.createHabit(result).subscribe(newHabit => {
-          this.habits.push(newHabit);
+          this.habits = [...this.habits, newHabit];
           this.snackBar.open(`Habit ${newHabit.name} was created.`, "Close", { duration: 3000 });
         });
       },
@@ -74,12 +78,18 @@ export class HabitsContainerComponent implements OnInit {
         }
         this.habitService.updateHabit(habit.id, result).subscribe(updatedHabit => {
           const index = this.habits.findIndex(h => h.id === habit.id);
-          this.habits[index] = updatedHabit;
-          this.snackBar.open(`Habit ${updatedHabit.name} was created.`, "Close", { duration: 3000 });
-        })
-      },
-      (error: HttpErrorResponse) => {
-        this.snackBar.open(error.message, "Close", { duration: 5000 });
+          if (index !== -1) {
+            this.habits = [
+              ...this.habits.slice(0, index),
+              updatedHabit,
+              ...this.habits.slice(index + 1)
+            ];
+          }
+          this.snackBar.open(`Habit ${updatedHabit.name} was updated.`, "Close", { duration: 3000 });
+        },
+          (error: HttpErrorResponse) => {
+            this.snackBar.open(error.message, "Close", { duration: 5000 });
+          })
       }
     );
   }
@@ -87,7 +97,8 @@ export class HabitsContainerComponent implements OnInit {
   private loadHabits(): void {
     this.habitService.getHabits().subscribe(
       (habitsResponse: HabitDto[]) => {
-        this.habits = habitsResponse;
+        this.originalHabits = habitsResponse;
+        this.habits = [...this.originalHabits];
       },
       (error: HttpErrorResponse) => {
         this.snackBar.open(error.message, "Close", { duration: 5000 });
@@ -170,6 +181,15 @@ export class HabitsContainerComponent implements OnInit {
 
   transformTargetPeriod(period: string | undefined): string {
     return !period ? "" : period.toUpperCase();
+  }
+
+  filterHabitsBySearch() {
+    this.habits = [...this.originalHabits.filter(habit => habit.name.toLowerCase().includes(this.searchHabitName.toLowerCase()))];
+  }
+
+  resetHabitsList() {
+    this.searchHabitName = "";
+    this.habits = [...this.originalHabits];
   }
 
 }

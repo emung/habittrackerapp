@@ -1,15 +1,16 @@
 mat-icon {
     font-size: 24px;
-  }
+}
 
 .actions-container {
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .create-button {
     margin: 20px;
-    margin-right: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,4 +95,9 @@ mat-icon {
 .target-progressbar {
     color: rgb(25, 25, 141);
     height: 50px;
+}
+
+.search-field {
+    margin-top: 20px;
+    min-width: 400px;
 }

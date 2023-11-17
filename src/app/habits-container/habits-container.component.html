@@ -1,7 +1,14 @@
 <div class="actions-container">
-    <button mat-flat-button class="create-button" type="button" color="primary"
-        (click)="openCreateHabitDialog()">Create
+    <button mat-flat-button class="create-button" type="button" color="primary" (click)="openCreateHabitDialog()">Create
     </button>
+    <mat-form-field class="search-field">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" name="search" placeholder="Search for habit name" [(ngModel)]="searchHabitName"
+            (keydown.enter)="filterHabitsBySearch()">
+        <button *ngIf="searchHabitName" matSuffix mat-icon-button aria-label="Clear" (click)="resetHabitsList()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </mat-form-field>
 </div>
 <mat-divider></mat-divider>
 <div class="habits-container container">
@@ -14,7 +21,7 @@
                     <mat-divider></mat-divider>
                     <p class="card-text">{{ habit.description }}</p>
                     <p class="card-text">Current progress: {{ habit.targetProgress }} / {{ habit.target }}</p>
-                    <p class="card-text">Target period: {{ habit.targetPeriod }}</p>
+                    <p class="card-text">Target period: {{ habit.targetPeriod | lowercase}}</p>
                     <mat-progress-bar class="target-progressbar" mode="determinate"
                         [value]="getProgress(habit.targetProgress, habit.target)"></mat-progress-bar>
                     <mat-divider></mat-divider>

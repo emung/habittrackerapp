@@ -33,10 +33,6 @@ export class HabitService {
     return this.http.delete(`${this.apiServerUrl}/habits/${habitId}`, { responseType: 'text' })
   }
 
-  public setTargetForHabit(habitId: number, target: number, targetPeriod: string): Observable<HabitDto> {
-    return this.http.put<HabitDto>(`${this.apiServerUrl}/habits/${habitId}/target`, { target, targetPeriod });
-  }
-
   public incrementHabitProgress(habitId: number): Observable<HabitDto> {
     return this.http.put<HabitDto>(`${this.apiServerUrl}/habits/${habitId}/target/increment`, { "incrementBy": 1 });
   }

@@ -121,23 +121,6 @@ export class HabitsContainerComponent implements OnInit {
     );
   }
 
-  onSetTargetClick(habitId: number) {
-    this.habitService.setTargetForHabit(habitId, 10, "DAILY").subscribe(
-      (updatedHabit: HabitDto) => {
-        // Find the habit in the habits array and update its targetProgress
-        const habitIndex = this.habits.findIndex(habit => habit.id === habitId);
-        if (habitIndex !== -1) {
-          this.habits[habitIndex].target = updatedHabit.target;
-          this.habits[habitIndex].targetProgress = 0;
-          this.habits[habitIndex].targetPeriod = updatedHabit.targetPeriod;
-        }
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    )
-  }
-
   onIncrementClick(habitId: number) {
     this.habitService.incrementHabitProgress(habitId).subscribe(
       (updatedHabit: HabitDto) => {
@@ -166,10 +149,6 @@ export class HabitsContainerComponent implements OnInit {
         alert(error.message);
       }
     );
-  }
-
-  isHabitTargetInitialized(target: number | undefined): boolean {
-    return target !== undefined && target > 0;
   }
 
   getProgress(targetProgress: number | undefined, target: number | undefined): number | undefined {

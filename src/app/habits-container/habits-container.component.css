@@ -92,6 +92,10 @@ mat-icon {
     color: rgb(14, 179, 14);
 }
 
+.category-button {
+    color: rgb(14, 179, 14);
+}
+
 .target-progressbar {
     color: rgb(25, 25, 141);
     height: 50px;

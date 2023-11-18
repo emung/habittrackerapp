@@ -1,5 +1,6 @@
 <div class="actions-container">
-    <button mat-flat-button class="create-button" type="button" color="primary" (click)="openCreateHabitDialog()">Create
+    <button mat-flat-button class="create-button" type="button" color="primary" (click)="openCreateHabitDialog()"
+        matTooltip="Create a new habit">Create
     </button>
     <mat-form-field class="search-field">
         <mat-label>Search</mat-label>
@@ -26,24 +27,25 @@
                         [value]="getProgress(habit.targetProgress, habit.target)"></mat-progress-bar>
                     <mat-divider></mat-divider>
                     <div class="card-actions">
-                        <button mat-icon-button *ngIf="isHabitTargetInitialized(habit.target)" class="increment-button"
-                            type="button" (click)="onIncrementClick(habit.id)"
-                            [disabled]="habit.targetProgress === habit.target">
+                        <button mat-icon-button class="increment-button" type="button"
+                            (click)="onIncrementClick(habit.id)" [disabled]="habit.targetProgress === habit.target"
+                            matTooltip="Increment habit progress">
                             <mat-icon>add</mat-icon>
                         </button>
-                        <button mat-icon-button *ngIf="isHabitTargetInitialized(habit.target)" class="decrement-button"
-                            type="button" (click)="onDecrementClick(habit.id)" [disabled]="habit.targetProgress === 0">
+                        <button mat-icon-button class="decrement-button" type="button"
+                            (click)="onDecrementClick(habit.id)" [disabled]="habit.targetProgress === 0"
+                            matTooltip="Decrement habit progress">
                             <mat-icon>remove</mat-icon>
                         </button>
-                        <button mat-icon-button *ngIf="!isHabitTargetInitialized(habit.target)"
-                            class="initialize-button" type="button" (click)="onSetTargetClick(habit.id)">
-                            <mat-icon fontIcon="play_circle_filled"></mat-icon>
-                        </button>
-                        <button mat-icon-button class="edit-button" type="button" (click)="openEditHabitDialog(habit)">
+                        <button mat-icon-button class="edit-button" type="button" (click)="openEditHabitDialog(habit)"
+                            matTooltip="Modify habit">
                             <mat-icon>edit</mat-icon>
                         </button>
+                        <button mat-icon-button class="category-button" type="button" matTooltip="Change category">
+                            <mat-icon>category</mat-icon>
+                        </button>
                         <button mat-icon-button color="warn" class="delete-button" type="button"
-                            (click)="onDeleteHabitClick(habit.id)">
+                            (click)="onDeleteHabitClick(habit.id)" matTooltip="Delete habit">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
